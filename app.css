@@ -3,7 +3,7 @@
 
 body {
 	font-family: 'Orbitron', sans-serif;
-  margin: 0;
+  	margin: 0;
 	padding: 0;
 	min-height: 100vh;
 	width: 100%;
@@ -15,7 +15,7 @@ body {
 }
 
 .start-screen, .game-screen, .error-screen {
-  margin: 0;
+  	margin: 0;
 	padding: 0;
 	min-height: 100vh;
 	flex-direction: column;
@@ -34,12 +34,6 @@ body {
 .error-screen {
 	color: #ff0000;
 	background-color: #050000;
-}
-
-@media only screen and (max-width: 600px) {
-  .error-screen {
-    font-size: .8em;
-  }
 }
 
 .start-screen {
@@ -84,12 +78,7 @@ body {
 	width: 800px;
 	margin: 40px auto;
 	text-shadow: none;
-}
-
-#frown {
-	width: 220px;
-	height: 500px;
-	margin: 40px auto;
+	border-radius: 5px;
 }
 
 .playing-screen {
@@ -98,6 +87,7 @@ body {
 	width: 800px;
 	margin: 40px auto;
 	background-color: #270979;
+	border-radius: 5px;
 }
 
 .get-ready {
@@ -110,18 +100,15 @@ body {
 	margin: 0;
 	background-color: #000005;
 	transition-duration: 100ms;
-}
-
-.error-screen #banner {
-	text-shadow: 1px 0px 17px red;
+	border-radius: 5px;
 }
 
 .target {
 	z-index: 3;
-  width: 30px;
-  height: 30px;
-  background-color: #b5a1ff;
-  border-radius: 50%;
+  	width: 30px;
+  	height: 30px;
+  	background-color: #b5a1ff;
+  	border-radius: 50%;
 	position: absolute;
 	transition-duration: 1000ms;
 	-webkit-box-shadow: 0px 0px 19px 12px #7e7ee0;
@@ -132,9 +119,9 @@ body {
 .target:hover {
 	transition-duration: 300ms;
 	background-color: #d6cdf3;
-	-webkit-box-shadow: 0px 0px 19px 12px #ade9c6;
-	-moz-box-shadow: 0px 0px 19px 12px #adade9;
-	box-shadow: 0px 0px 19px 12px #adade9;
+	-webkit-box-shadow: 0px 0px 38px 24px #ade9c6;
+	-moz-box-shadow: 0px 0px 38px 24px #adade9;
+	box-shadow: 0px 0px 38px 24px #adade9;
 }
 
 #wink {
@@ -151,5 +138,53 @@ body {
 }
 
 
+@media only screen and (max-width: 800px) {
+	.game-screen, .start-screen {
+	  font-size: .6em;
+	}
 
+	.target {
+		width: 16px;
+		height: 16px;
+		-webkit-box-shadow: 0px 0px 10px 6px #7e7ee0;
+		-moz-box-shadow: 0px 0px 10px 6px #7e7ee0;
+		box-shadow: 0px 0px 10px 6px #7e7ee0;
+	}
+
+	.target:hover {
+		transition-duration: 300ms;
+		background-color: #d6cdf3;
+		-webkit-box-shadow: 0px 0px 19px 12px #ade9c6;
+		-moz-box-shadow: 0px 0px 19px 12px #adade9;
+		box-shadow: 0px 0px 19px 12px #adade9;
+	}
+	
+	.playing-screen, .ready-svg, #smile {
+		width: 330px;
+		height: 300px;
+	}
+
+	.header {
+		height: 100px;
+	}
+
+	#face {
+		transform: scale(.42) translateY(60px);
+		stroke-width: 3px;
+	}
+
+	#countdown {
+		font-size: 5.5em;
+		transform: translate(-235px, -130px);
+	}
+
+	#greeting {
+		transform: translate(-235px, -35px);
+	}
+
+	.svg-text {
+		transform: translate(-235px, -190px);
+	}
+
+}
 

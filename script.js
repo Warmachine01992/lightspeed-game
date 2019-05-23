@@ -3,8 +3,10 @@
 $( document ).ready(function() {
 	$('.prev-score').text(padDigits(score));
 	$('.high-score').text(padDigits(hiScore));
-	if (($(window).width() < 800) || $(window).height() < 600){	
+	if ($(window).height() < 400){
 		showWarningScreen();
+	} else if ($(window).width() < 800){	
+		smallGame();
 	}	
 });
 
@@ -17,6 +19,10 @@ var inGame = false;
 var intervals = [];
 var gameX = 750;
 var gameY = 450;
+var gamePadding = 25;
+var isSmall = false;
+var warning = false;
+var targetWidth = 30;
 
 $('#start-btn').click(e => {
 	getReady();
@@ -83,12 +89,15 @@ function countDown(seconds) {
 }
 
 function centerTarget(){
-	$('.target').attr('style', `transform: translate(385px, 250px)`);
+	$('.target').attr('style', `transform: translate(
+		${gameX/2 + gamePadding - targetWidth/2}px, 
+		${gameY/2 + gamePadding - targetWidth/2}px)`
+	);
 }
 
 function moveTarget(){
-	let x = (Math.floor(Math.random() * gameX) + 25);
-	let y = (Math.floor(Math.random() * gameY) + 25);
+	let x = (Math.floor(Math.random() * gameX) + gamePadding);
+	let y = (Math.floor(Math.random() * gameY) + gamePadding);
 	$('.target').attr('style', `transform: translate(${x}px, ${y}px)`);
 }
 
@@ -136,6 +145,7 @@ function wellDone() {
 }
 
 function showStartScreen(){
+	warning = false;
 	$('.start-screen').attr('style', 'display: flex');
 	$('.game-screen').attr('style', 'display: none');
 	$('.error-screen').attr('style', 'display: none');
@@ -147,6 +157,7 @@ function showPlayingScreen(){
 }
 
 function showWarningScreen(){
+	warning = true;
 	$('.start-screen').attr('style', 'display: none');
 	$('.game-screen').attr('style', 'display: none');
 	$('.error-screen').attr('style', 'display: flex');
@@ -164,31 +175,42 @@ function hideReadyScreen(){
 	$('.target').attr('style', 'display: block');
 }
 
+function smallGame(){
+	isSmall = true;
+	gameX = 290;
+	gameY = 260;
+	gamePadding = 20;
+	targetWidth = 16;
+}
+
+function normalGame(){
+	isSmall = false;
+	gameX = 750;
+	gameY = 450;
+	gamePadding = 25;
+	targetWidth = 30;
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // handling screen size
 $(window).resize(function(){
-	if (($(window).width() < 800) || $(window).height() < 600){	
+	if (($(window).height() < 400)) {
 		endGame();
 		showWarningScreen();
-	}	
-	else if (($(window).width() >= 800) && ($(window).height() >= 600) && !inGame){
-		showStartScreen();
+	} else {
+		if (warning) {
+			showStartScreen();
+		} else {
+			if (($(window).width() < 800) && !isSmall){	
+				endGame();
+				smallGame();
+				// showWarningScreen();
+			}	
+			else if (($(window).width() >= 800) && isSmall){
+				endGame();
+				normalGame();
+			}
+		}
 	}
 });
-
-
-
-/*
-const cursor = document.querySelector('.cursor');
-const cursorFollow = document.querySelector('.cursor-follow');
-const playBtn = document.querySelector('#start-btn')
-
-document.addEventListener('mousemove', e=> {
-	cursor.setAttribute("style", `top: ${+e.pageY - 5}px; left: ${+e.pageX -5}px;`);
-});
-
-document.addEventListener('mousemove', e=> {
-	cursorFollow.setAttribute("style", `top: ${+e.pageY - 8}px; left: ${+e.pageX - 8}px;`);
-});
-*/
