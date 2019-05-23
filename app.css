@@ -1,29 +1,4 @@
-
-
-
 @import url('https://fonts.googleapis.com/css?family=Orbitron');
-
-/* Custom Cursor */
-/* .cursor {
-  z-index: 2;
-  width: 10px;
-  height: 10px;
-  background-color: #93ef09;
-  border-radius: 50%;
-  position: absolute;
-} */
-
-/* actual colors: 
-	#825ce9
-	#050013
-	text-shadow: 1px 0px 17px #ADADE9;
-*/
-
-/* #smile, .playing-screen {
-	-webkit-box-shadow: 0px 0px 16px 6px #51eb36;
-	-moz-box-shadow: 0px 0px 16px 6px #51eb36;
-	box-shadow: 0px 0px 16px 6px #51eb36;
-} */
 
 
 body {
@@ -36,20 +11,35 @@ body {
 
 #banner {
 	font-size: 4em;
-	text-shadow: 1px 0px 17px #5ddf21;
+	text-shadow: 1px 0px 17px rgb(144, 144, 218);
 }
 
 .start-screen, .game-screen, .error-screen {
-	color: #93ef09;
-  background-color: #001200;
   margin: 0;
 	padding: 0;
 	min-height: 100vh;
-	width: 100%;
 	flex-direction: column;
 	flex-wrap: wrap;
 	align-items: center;
 	text-align: center;
+	width: 100%;
+}
+
+.start-screen, .game-screen {
+	color: #825ce9;
+	background-color: #000005;
+	
+}
+
+.error-screen {
+	color: #ff0000;
+	background-color: #050000;
+}
+
+@media only screen and (max-width: 600px) {
+  .error-screen {
+    font-size: .8em;
+  }
 }
 
 .start-screen {
@@ -60,20 +50,16 @@ body {
 	display: none;
 }
 
-.error-screen {
-	color: #ff0000;
-	background-color: #120000;
-}
-
 .header {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	height: 200px;
 }
 
-#start-btn, #stop-btn {
+#start-btn, #stop-btn, .btn {
 	padding: 5px;
-	border: 1px solid #78bf0d;
+	border: 1px solid #825ce9;
 	border-radius: 5%;
 	z-index: 6;
 	width: 100px;
@@ -82,18 +68,18 @@ body {
 
 #start-btn:hover {
 	color: #000000;
-	background-color: #78bf0d;
+	background-color: #825ce9;
 	opacity: .6;
 }
 
 #stop-btn:hover {
 	color: #000000;
-	background-color: #78bf0d;
+	background-color: #825ce9;
 	opacity: .6;
 }
 
 #smile {
-	border: 1px solid #78bf0d;
+	border: 1px solid #825ce9;
 	height: 500px;
 	width: 800px;
 	margin: 40px auto;
@@ -101,17 +87,29 @@ body {
 }
 
 #frown {
-	width: 300px;
-	height: 300px;
-	margin: 50px auto;
+	width: 220px;
+	height: 500px;
+	margin: 40px auto;
 }
 
 .playing-screen {
-	border: 1px solid #93ef09;
+	border: 1px solid #825ce9;
 	height: 500px;
 	width: 800px;
 	margin: 40px auto;
-	background-color: #0b1300;
+	background-color: #270979;
+}
+
+.get-ready {
+	display: none;
+}
+
+.ready-svg {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	background-color: #000005;
+	transition-duration: 100ms;
 }
 
 .error-screen #banner {

@@ -1,27 +1,25 @@
-
-
-// set up the custom cursor
-// $(document).mousemove(e => {
-// 	$('.cursor').attr("style", `top: ${+e.pageY - 5}px; left: ${+e.pageX -5}px;`);
-// });
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // loading the default DOM values
 $( document ).ready(function() {
-	$('.prev-score').text('0');
-	$('.high-score').text(`${hiScore}`);
+	$('.prev-score').text(padDigits(score));
+	$('.high-score').text(padDigits(hiScore));
 	if (($(window).width() < 800) || $(window).height() < 600){	
 		showWarningScreen();
 	}	
 });
 
-// game code begins
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// game variables and event listeners 
 var score = 0;
 var hiScore = 0;
 var gameScore = [];
 var inGame = false;
 var intervals = [];
+var gameX = 750;
+var gameY = 450;
 
 $('#start-btn').click(e => {
-	startGame();
+	getReady();
 });
 
 $('#stop-btn').click(e => {
@@ -33,22 +31,46 @@ $('.target').click(function(e) {
 	updateScores();
 });
 
-function startGame(){
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// game functionality
+
+function getReady(){
 	inGame = true;
+
+	showPlayingScreen();
+	showReadyScreen();
+	$('#countdown').text(3)
+	readyCount(2);
+}
+
+function startGame(){
 	score = 0;
 	gameScore = [];	
 
-	showPlayingScreen();
+	hideReadyScreen();
 	centerTarget();
-	$('.current-score').text(`score`);
+	$('.current-score').text(padDigits(score));
 	$('.game-clock').text(15);
-	countDown(14, 1, '.game-clock');
+	countDown(14);
+}
+
+function readyCount(seconds) {
+	var intervalId = setInterval(function() {
+		if (seconds > 0) {
+			$('#countdown').text(seconds);
+			seconds--;
+		} else {
+			clearInterval(intervalId);
+			startGame()
+		}
+	}, 1000);
+	intervals.push(intervalId);
 }
 
 function countDown(seconds) {
 	var intervalId = setInterval(function() {
 		if (seconds >= 0) {
-			$('.game-clock').text(seconds);
+			$('.game-clock').text(padDigits(seconds));
 			seconds--;
 		} else {
 			clearInterval(intervalId);
@@ -60,23 +82,23 @@ function countDown(seconds) {
 		// fixes a bug that didn't clear the interval if quit before one second has passed.
 }
 
+function centerTarget(){
+	$('.target').attr('style', `transform: translate(385px, 250px)`);
+}
+
+function moveTarget(){
+	let x = (Math.floor(Math.random() * gameX) + 25);
+	let y = (Math.floor(Math.random() * gameY) + 25);
+	$('.target').attr('style', `transform: translate(${x}px, ${y}px)`);
+}
+
 function updateScores(){
 	gameScore.push('x');
-	$('.current-score').text(`${gameScore.length}`);
+	$('.current-score').text(`${gameScore.length.toString().padStart(2, "0")}`);
 	score = gameScore.length;
 	if(score > hiScore){
 		hiScore = gameScore.length;
 	}
-}
-
-function moveTarget(){
-	let x = (Math.floor(Math.random() * 750) + 25);
-	let y = (Math.floor(Math.random() * 450) + 25);
-	$('.target').attr('style', `transform: translate(${x}px, ${y}px)`);
-}
-
-function centerTarget(){
-	$('.target').attr('style', `transform: translate(400px, 250px)`);
 }
 
 function endGame(){
@@ -86,8 +108,8 @@ function endGame(){
 	intervals = [];
 
 	showStartScreen();
-	$('.prev-score').text(`${score}`);
-	$('.high-score').text(`${hiScore}`);
+	$('.prev-score').text(padDigits(score));
+	$('.high-score').text(padDigits(hiScore));
 	if(score > 0) {
 		wellDone()
 	} else {
@@ -95,6 +117,12 @@ function endGame(){
 	}
 }
 
+function padDigits(num){
+	return num.toString().padStart(2, "0");
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// screen rendering
 function welcome() {
 	$('#eye').attr('style', 'display: block');
 	$('#wink').attr('style', 'display: none')
@@ -124,6 +152,21 @@ function showWarningScreen(){
 	$('.error-screen').attr('style', 'display: flex');
 }
 
+function showReadyScreen(){
+	$('.get-ready').attr('style', 'display: flex');
+	$('.HUD').attr('style', 'display: none');
+	$('.target').attr('style', 'display: none');
+}
+
+function hideReadyScreen(){
+	$('.get-ready').attr('style', 'display: none');
+	$('.HUD').attr('style', 'display: flex');
+	$('.target').attr('style', 'display: block');
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// handling screen size
 $(window).resize(function(){
 	if (($(window).width() < 800) || $(window).height() < 600){	
 		endGame();
@@ -134,7 +177,6 @@ $(window).resize(function(){
 	}
 });
 
-// screen sizing issues
 
 
 /*
