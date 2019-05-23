@@ -1,14 +1,15 @@
+
+
 // set up the custom cursor
 // $(document).mousemove(e => {
 // 	$('.cursor').attr("style", `top: ${+e.pageY - 5}px; left: ${+e.pageX -5}px;`);
 // });
-
 // loading the default DOM values
 $( document ).ready(function() {
 	$('.prev-score').text('0');
 	$('.high-score').text(`${hiScore}`);
 	if (($(window).width() < 800) || $(window).height() < 600){	
-		renderWarning();
+		showWarningScreen();
 	}	
 });
 
@@ -16,7 +17,6 @@ $( document ).ready(function() {
 var score = 0;
 var hiScore = 0;
 var gameScore = [];
-var playedYet = false;
 var inGame = false;
 var intervals = [];
 
@@ -28,21 +28,19 @@ $('#stop-btn').click(e => {
 	endGame();
 })
 
+$('.target').click(function(e) {
+	moveTarget();
+	updateScores();
+});
+
 function startGame(){
 	inGame = true;
-	showPlayingScreen();
-	moveTarget();
-	$('.current-score').text(`0`);
 	score = 0;
 	gameScore = [];	
-	
-	if(!playedYet){
-		$('.target').click(function(e) {
-			moveTarget();
-			updateScores();
-		});
-		playedYet = true;
-	}
+
+	showPlayingScreen();
+	centerTarget();
+	$('.current-score').text(`score`);
 	$('.game-clock').text(15);
 	countDown(14, 1, '.game-clock');
 }
@@ -64,11 +62,11 @@ function countDown(seconds) {
 
 function updateScores(){
 	gameScore.push('x');
-		$('.current-score').text(`${gameScore.length}`);
-		score = gameScore.length;
-		if(score > hiScore){
-			hiScore = gameScore.length;
-		}
+	$('.current-score').text(`${gameScore.length}`);
+	score = gameScore.length;
+	if(score > hiScore){
+		hiScore = gameScore.length;
+	}
 }
 
 function moveTarget(){
@@ -77,53 +75,66 @@ function moveTarget(){
 	$('.target').attr('style', `transform: translate(${x}px, ${y}px)`);
 }
 
+function centerTarget(){
+	$('.target').attr('style', `transform: translate(400px, 250px)`);
+}
+
 function endGame(){
+	inGame = false;
+	// clear any existing intervals, then remove all of them.
 	intervals.forEach(x => clearInterval(x));
 	intervals = [];
-		// clear any existing intervals, then remove all of them.
-	inGame = false;
+
 	showStartScreen();
-	$('#greeting').text('Well done!');
 	$('.prev-score').text(`${score}`);
 	$('.high-score').text(`${hiScore}`);
+	if(score > 0) {
+		wellDone()
+	} else {
+		welcome();
+	}
+}
+
+function welcome() {
+	$('#eye').attr('style', 'display: block');
+	$('#wink').attr('style', 'display: none')
+	$('#greeting').text('Welcome!');
+}
+
+function wellDone() {
+	$('#eye').attr('style', 'display: none');
+	$('#wink').attr('style', 'display: block')
+	$('#greeting').text('Well done!');
 }
 
 function showStartScreen(){
-	$('.game-display').attr('style', 'display: none');
-	$('.game').attr('style', 'display: none');
-	$('.game-screen').attr('style', 'display: none')
-	$('#smile').attr('style', 'display: block');
-	$('.start-menu').attr('style', 'display: flex');
+	$('.start-screen').attr('style', 'display: flex');
+	$('.game-screen').attr('style', 'display: none');
+	$('.error-screen').attr('style', 'display: none');
 }
 
 function showPlayingScreen(){
-	$('.game-display').attr('style', 'display: flex');
-	$('.game').attr('style', 'display: block');
-	$('.game-screen').attr('style', 'display: block')
-	$('#smile').attr('style', 'display: none');
-	$('.start-menu').attr('style', 'display: none');
+	$('.start-screen').attr('style', 'display: none');
+	$('.game-screen').attr('style', 'display: flex')
+}
+
+function showWarningScreen(){
+	$('.start-screen').attr('style', 'display: none');
+	$('.game-screen').attr('style', 'display: none');
+	$('.error-screen').attr('style', 'display: flex');
 }
 
 $(window).resize(function(){
 	if (($(window).width() < 800) || $(window).height() < 600){	
 		endGame();
-		renderWarning();
+		showWarningScreen();
 	}	
-	else if (($(window).width() >= 800) && $(window).height() >= 600){
-		renderContainer();
+	else if (($(window).width() >= 800) && ($(window).height() >= 600) && !inGame){
+		showStartScreen();
 	}
 });
 
 // screen sizing issues
-function renderWarning(){
-	$('.container').attr('style', 'display: none');
-	$('.error-screen').attr('style', 'display: flex');
-}
-
-function renderContainer(){
-	$('.container').attr('style', 'display: flex');
-	$('.error-screen').attr('style', 'display: none');
-}
 
 
 /*

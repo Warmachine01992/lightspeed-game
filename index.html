@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -9,34 +11,29 @@
   <body>
   
 	<!-- <div class='cursor'></div> -->
-<div class='container'>
+<div class='start-screen'>
 	
-
 	<h1 id='banner'>\\LightSpeed//</h1>
 	
-	<div class='start-menu'>
+	<div class='header'>
 		<p>Hi Score: <span class='high-score'></span></p>
 		<p>Previous Score: <span class='prev-score'></span></p>
     <h1 id='start-btn'>Play!</h1>
 	</div>
 
-	<div class='game-display'>
-		<p>Time Remaining: <span class='game-clock'></span></p>
-		<p>Score: <span class='current-score'></span></p>
-		<h1 id='stop-btn'>Quit!</h1>
-	</div>
-	
 	<svg id='smile'
-		version="1.1" 
-		baseProfile="full"
+			version="1.1" 
+			baseProfile="full"
 			xmlns="http://www.w3.org/2000/svg">
-			<g stroke-width="1px" stroke="#78bf0d">
+
+			<g id="smile" stroke-width="1px" stroke="#78bf0d" fill="#001200">
 				<circle cx="400" cy="230" r="100px" />
 				<circle cx="360" cy="190" r="5px" fill="#78bf0d"/>
-				<circle cx="440" cy="190" r="5px" fill="#78bf0d"/>
+				<circle id="eye" cx="440" cy="190" r="5px" fill="#78bf0d"/>
+				<path id="wink" d="M445 185 L425 190 L445 195"/>
 				<path d="M350 250 Q 400 280 450 250" />
-				
 			</g>
+
 			<g stroke="#78bf0d"  text-anchor="middle">
 				<text id="greeting" x="400" y="80" font-size="3.0em">Welcome!</text>
 				<text x="400" y="400">Can you move at the speed of light?</text>
@@ -46,18 +43,38 @@
 			</g>
 	</svg>
 
-	<div class="game-screen">
+</div>
+
+<div class='game-screen'>
+
+	<h1 id='banner'>\\LightSpeed//</h1>
+
+	<div class='header'>
+		<p>Time Remaining: <span class='game-clock'></span></p>
+		<p>Score: <span class='current-score'></span></p>
+		<h1 id='stop-btn'>Quit!</h1>
+	</div>
+	
+	<div class="playing-screen">
 		<div class="target"></div>
 	</div>
+
 </div>
 
 
 
-
 <div class="error-screen">
-	<h2 id="warning-banner">\\SCREEN SIZE IS TOO SMALL//</h2>
-	<h2>Minimum Requirement: 800x600</h2>
-	<svg 
+	<h1 id='banner'>\\LightSpeed//</h1>
+
+	<div class='header'>
+		<p>THESE SCREEN DIMENSIONS ARE NOT SUPPORTED</p>
+		<p>
+			Please resize to minimum 800x600 <br>
+			or play on a different device.
+		</p>
+	</div>
+
+	<svg id="frown"
 		version="1.1" 
 		baseProfile="full"
 			xmlns="http://www.w3.org/2000/svg">
@@ -73,6 +90,7 @@
 			
 		</g>
 	</svg>
+
 </div>
 
 
