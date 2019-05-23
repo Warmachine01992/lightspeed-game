@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="app.css">
+    
+    <title>Target Game</title>
+  </head>
+  <body>
+  
+		<div class='start-screen'>
+	
+			<h1 id='banner'>\\LightSpeed//</h1>
+			
+			<div class='header'>
+				<p>Hi Score: <span class='high-score'></span></p>
+				<p>Previous Score: <span class='prev-score'></span></p>
+				<h1 id='start-btn'>Play!</h1>
+			</div>
+		
+			<svg id='smile'
+					version="1.1" 
+					baseProfile="full"
+					xmlns="http://www.w3.org/2000/svg">
+		
+					<g id="face" stroke-width="1px" stroke="#825ce9" fill="#000005">
+						<circle cx="400" cy="230" r="100px" />
+						<circle cx="360" cy="190" r="5px" fill="#825ce9"/>
+						<circle id="eye" cx="440" cy="190" r="5px" fill="#825ce9"/>
+						<path id="wink" d="M445 185 L425 190 L445 195"/>
+						<path d="M350 250 Q 400 280 450 250" />
+					</g>
+					
+					<g stroke="#825ce9" text-anchor="middle">
+						<text id="greeting" x="400" y="80" font-size="3.0em">Welcome!</text>
+					</g>
+		
+					<g stroke="#825ce9" text-anchor="middle">
+						<text class="svg-text" x="400" y="400">Can you move at the speed of light?</text>
+						<text class="svg-text" x="400" y="430">Test your reflexes!</text>
+						<text class="svg-text" x="400" y="460">When the light appears, click it to earn a point.</text>
+					</g>
+		
+			</svg>
+		
+		</div>
+		
+		<!-- Gameplay Screen -->
+		<div class='game-screen'>
+		
+			<h1 id='banner'>\\LightSpeed//</h1>
+		
+			<div class='header HUD'>
+				<p>Time Remaining: <span class='game-clock'></span></p>
+				<p>Score: <span class='current-score'></span></p>
+				<h1 id='stop-btn'>Quit!</h1>
+			</div>
+		
+			<div class='header get-ready'>
+				<h1>Get Ready!</h1>
+			</div>
+			
+			<div class='playing-screen'>
+				<svg class='get-ready ready-svg'>
+					<text id="countdown" x = 400 y = 300 stroke="#825ce9" fill="#000005" text-anchor="middle" font-size="10.0em" ></text>
+				</svg>
+				<div class='target'></div>
+			</div>
+		
+		</div>
+		
+		<!-- Small Screen -->
+		<div class='error-screen'>
+		
+			<div class='header'>
+				<p>THESE SCREEN DIMENSIONS ARE NOT SUPPORTED</p>
+				<p>
+					The minimum possible screen <br> 
+					height to play is 400 
+					
+				</p>
+			</div>
+		
+		
+		</div>
+
+
+
+	<script
+		src="https://code.jquery.com/jquery-3.4.0.min.js"
+		integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+		crossorigin="anonymous">
+	</script>
+  	<script src="script.js"></script>
+  </body>
+</html>
